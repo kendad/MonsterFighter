@@ -11,6 +11,7 @@ void close();//Closes everything when application closes
 
 void handelUserInput(SDL_Event* e);//handel User Inputs#pragma once
 
+bool checkCollision(SDL_Rect a, SDL_Rect b);//check for collision between two objects(AABB)
 
 class Texture {
 public:

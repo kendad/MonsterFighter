@@ -35,6 +35,9 @@ void handelUserInput(SDL_Event* e) {
 	}
 }
 
+//#######################################################################################################################################################//
+//#######################################################################################################################################################//
+
 //TEXTURE CLASS
 Texture::Texture() {
 	mTexture = NULL;
@@ -76,3 +79,51 @@ void Texture::render(int x, int y, SDL_Rect* clip) {
 
 int Texture::getWidth() { return mWidth; }
 int Texture::getHeight() { return mHeight; }
+
+//#######################################################################################################################################################//
+//#######################################################################################################################################################//
+
+//Collision Detection
+bool checkCollision(SDL_Rect a, SDL_Rect b) {
+	//calculate the sides of the rectangle
+	int leftA, leftB;
+	int rightA, rightB;
+	int topA, topB;
+	int bottomA, bottomB;
+
+	//Rectangle A
+	leftA = a.x;
+	rightA = a.x + a.w;
+	topA = a.y;
+	bottomA = a.y + a.h;
+
+	//Rectangle B
+	leftB = b.x;
+	rightB = b.x + b.w;
+	topB = b.y;
+	bottomB = b.y + b.h;
+
+	//If any of the sides from A are outside of B
+	if (bottomA <= topB)
+	{
+		return false;
+	}
+
+	if (topA >= bottomB)
+	{
+		return false;
+	}
+
+	if (rightA <= leftB)
+	{
+		return false;
+	}
+
+	if (leftA >= rightB)
+	{
+		return false;
+	}
+
+	//If none of the sides from A are outside B
+	return true;
+}

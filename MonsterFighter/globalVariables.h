@@ -9,6 +9,12 @@ const int X_LEVEL_LENGTH=4;
 const int LEVEL_WIDTH = SCREEN_WIDTH * X_LEVEL_LENGTH;
 const int LEVEL_HEIGHT = SCREEN_HEIGHT;
 
+struct vec2D
+{
+	int x;
+	int y;
+};
+
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
 
