@@ -1,5 +1,6 @@
 #include "swing.h"
 #include "globalVariables.h"
+#include "basicFunctionalities.h"
 #include <iostream>
 
 //POINT OBJECT
@@ -52,6 +53,24 @@ void Point::update() {
 		//update pointBody with latest X&Y vals
 		pointBody.x = (int)x;
 		pointBody.y = (int)y;
+
+		for (int i = 0; i < worldObstacles.size(); i++) {
+			if (checkCollision(pointBody, worldObstacles[i])) {
+				bool checkHorizontalCollision = pointBody.y + pointBody.h<worldObstacles[i].y + worldObstacles[i].h && pointBody.y>worldObstacles[i].y;
+				bool checkVerticalCollision = y + pointBody.h > worldObstacles[i].y && y + pointBody.h < worldObstacles[i].y + pointBody.h && x < worldObstacles[i].x + worldObstacles[i].w && x>worldObstacles[i].x;
+				if (checkVerticalCollision) { y = worldObstacles[i].y - pointBody.h; oldY = y;}
+				else if (checkHorizontalCollision) {
+					if (x < SCREEN_WIDTH / 2) {
+						if (x <= worldObstacles[i].x + worldObstacles[i].w && x >= worldObstacles[i].x + worldObstacles[i].w - pointBody.w * 3) { x = worldObstacles[i].x + worldObstacles[i].w; }
+						if (x >= worldObstacles[i].x && x <= worldObstacles[i].x + pointBody.w * 3) { x = worldObstacles[i].x - pointBody.w; }
+					}
+					if (x > SCREEN_WIDTH / 2) {
+						if (x >= worldObstacles[i].x && x <= worldObstacles[i].x + pointBody.w * 3) { x = worldObstacles[i].x - pointBody.w; }
+						if (x <= worldObstacles[i].x + worldObstacles[i].w && x >= worldObstacles[i].x + worldObstacles[i].w - pointBody.w * 3) { x = worldObstacles[i].x + worldObstacles[i].w; }
+					}
+				}
+			}
+		}
 	}
 }
 

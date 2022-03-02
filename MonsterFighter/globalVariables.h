@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <vector>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -21,3 +22,5 @@ extern SDL_Renderer* gRenderer;
 extern SDL_Event userInputEvent;
 
 extern SDL_Rect camera;
+
+extern std::vector<SDL_Rect> worldObstacles;

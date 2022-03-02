@@ -38,6 +38,7 @@ void main() {
 		backgroundTexture.render(0, 0,&camera);
 		//Obstacles
 		map.renderObstacles();
+		worldObstacles = map.getObstacles();
 		//check for collision on the raycast and update the target position
 		raycast.raycastToMousePosition(player.getPlayerRect(), map.getObstacles());
 		//Swing and Player
