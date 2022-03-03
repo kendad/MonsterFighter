@@ -156,16 +156,20 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playerAnimation.cpp" />
     <ClCompile Include="raycast.cpp" />
     <ClCompile Include="swing.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basicFunctionalities.h" />
     <ClInclude Include="globalVariables.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playerAnimation.h" />
     <ClInclude Include="raycast.h" />
     <ClInclude Include="swing.h" />
+    <ClInclude Include="texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

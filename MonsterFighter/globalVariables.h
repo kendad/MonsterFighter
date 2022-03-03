@@ -24,3 +24,6 @@ extern SDL_Event userInputEvent;
 extern SDL_Rect camera;
 
 extern std::vector<SDL_Rect> worldObstacles;
+
+extern int PLAYER_ANIMATION_TYPE;
+extern bool PLAYER_ANIMATION_FLIP;

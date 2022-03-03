@@ -10,6 +10,10 @@ public:
 	void move(std::vector<SDL_Rect> obstacles);
 	SDL_Rect getPlayerRect();
 	SDL_Rect mPlayerBody;
+
+
+	bool hasCollided;
+	bool isGrounded;
 private:
 	int mXpos;
 	int mYpos;
@@ -21,8 +25,5 @@ private:
 	int mVelY;
 
 	int gravity;
-
-	bool hasCollided;
-	bool isGrounded;
 };
 

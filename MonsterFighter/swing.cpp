@@ -147,6 +147,7 @@ void Swing::handelUserInput(SDL_Event* e) {
 	if (e->type == SDL_KEYDOWN) {
 		if (e->key.keysym.sym == SDLK_e) { pointsVector.clear(); sticksVector.clear(); }
 		if (e->key.keysym.sym == SDLK_x) {
+			PLAYER_ANIMATION_TYPE = 2;
 			if (pointsVector.size() >= 1) pointsVector.erase(pointsVector.begin());
 		}
 		if (e->key.keysym.sym == SDLK_d || e->key.keysym.sym == SDLK_a) { shouldPlayerMove = true; }
@@ -155,6 +156,7 @@ void Swing::handelUserInput(SDL_Event* e) {
 
 	if (e->type == SDL_KEYUP) {
 		if (e->key.keysym.sym == SDLK_d || e->key.keysym.sym == SDLK_a) { shouldPlayerMove = false; }
+		if (e->key.keysym.sym == SDLK_x) { PLAYER_ANIMATION_TYPE = 0; }
 	}
 }
 

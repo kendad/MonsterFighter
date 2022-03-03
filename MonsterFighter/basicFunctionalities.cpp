@@ -38,51 +38,6 @@ void handelUserInput(SDL_Event* e) {
 //#######################################################################################################################################################//
 //#######################################################################################################################################################//
 
-//TEXTURE CLASS
-Texture::Texture() {
-	mTexture = NULL;
-	mWidth = 0;
-	mHeight = 0;
-}
-
-void Texture::free() {
-	if (mTexture != NULL) {
-		mTexture = NULL;
-		mWidth = 0;
-		mHeight = 0;
-	}
-}
-
-Texture::~Texture() {
-	free();
-}
-
-void Texture::loadFromFile(std::string path) {
-	free();
-	SDL_Texture* newTexture;
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-	newTexture = SDL_CreateTextureFromSurface(gRenderer,loadedSurface);
-	mWidth = loadedSurface->w;
-	mHeight = loadedSurface->h;
-	SDL_FreeSurface(loadedSurface);
-	mTexture = newTexture;
-}
-
-void Texture::render(int x, int y, SDL_Rect* clip) {
-	SDL_Rect destRect = { x,y,mWidth,mHeight };
-	if (clip != NULL) {
-		destRect.h = clip->h;
-		destRect.w = clip->w;
-	}
-	SDL_RenderCopy(gRenderer,mTexture,clip,&destRect);
-}
-
-int Texture::getWidth() { return mWidth; }
-int Texture::getHeight() { return mHeight; }
-
-//#######################################################################################################################################################//
-//#######################################################################################################################################################//
-
 //Collision Detection
 bool checkCollision(SDL_Rect a, SDL_Rect b) {
 	//calculate the sides of the rectangle

@@ -3,6 +3,7 @@
 #include "map.h"
 #include "raycast.h"
 #include "swing.h"
+#include "playerAnimation.h"
 #undef main
 
 void main() {
@@ -15,11 +16,10 @@ void main() {
 
 	//Class Objects declared here
 	Player player;
-	Texture backgroundTexture;
-	backgroundTexture.loadFromFile("Assets/bg-2.png");
 	Map map;
 	Raycast raycast;
 	Swing swing;
+	PlayerAnimation playerAnimation;
 
 	//game Loop
 	while (isRunning) {
@@ -34,8 +34,6 @@ void main() {
 		SDL_RenderClear(gRenderer);
 
 		//draw stuff here
-		//Background Image
-		backgroundTexture.render(0, 0,&camera);
 		//Obstacles
 		map.renderObstacles();
 		worldObstacles = map.getObstacles();
@@ -47,7 +45,30 @@ void main() {
 		player.move(map.getObstacles());
 
 		swing.update();
-		player.render();
+		//player.render();
+		if (PLAYER_ANIMATION_TYPE == 2) {
+			playerAnimation.playClimbAnimation(&player, true);
+		}
+		else
+			if (swing.isSwinging && !swing.shouldPlayerJump) {
+				if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playStartSwingAnimation(&player); }
+				else { playerAnimation.playStartSwingAnimation(&player, true); }
+				swing.isSwinging = false;
+			}
+		else
+			if (!swing.isSwinging && !swing.shouldPlayerJump) {
+				if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playSwingAnimation(&player); }
+				else { playerAnimation.playSwingAnimation(&player, true); }
+			}
+		else
+			if (!player.isGrounded) {
+				if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playJumpIdleAnimation(&player); }
+				else { playerAnimation.playJumpIdleAnimation(&player, true); }
+			}
+		else {
+				if (PLAYER_ANIMATION_TYPE == 1) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playWalkAnimation(&player); } else { playerAnimation.playWalkAnimation(&player, true); } }
+				if (PLAYER_ANIMATION_TYPE == 0) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playIdleAnimation(&player); } else { playerAnimation.playIdleAnimation(&player, true); } }
+			}
 
 		//Update the Renderer with the new stuff
 		SDL_RenderPresent(gRenderer);

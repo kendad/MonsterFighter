@@ -54,7 +54,7 @@ public:
 
 	std::vector<Point> pointsVector;
 	std::vector<Stick> sticksVector;
-private:
+
 	bool shouldPlayerMove;
 	bool shouldPlayerJump;
 	int div;

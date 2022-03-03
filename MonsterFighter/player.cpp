@@ -3,8 +3,8 @@
 #include "basicFunctionalities.h"
 
 Player::Player() {
-	mWidth = 10;
-	mHeight = 10;
+	mWidth = 30;
+	mHeight = 30;
 
 	mXpos = 10;
 	mYpos = 10;
@@ -30,15 +30,15 @@ void Player::render() {
 void Player::handelUserInput(SDL_Event* e) {
 	if (e->type == SDL_KEYDOWN && e->key.repeat == 0) {
 		switch (e->key.keysym.sym) {
-		case SDLK_d:mVelX += 5; break;
-		case SDLK_a:mVelX -= 5; break;
+		case SDLK_d:mVelX += 5; PLAYER_ANIMATION_TYPE = 1; PLAYER_ANIMATION_FLIP = false; break;
+		case SDLK_a:mVelX -= 5; PLAYER_ANIMATION_TYPE = 1; PLAYER_ANIMATION_FLIP = true; break;
 		case SDLK_SPACE: if (isGrounded) { gravity *= -1; mPlayerBody.y -= 1; isGrounded = false; } break;
 		}
 	}
 	if (e->type == SDL_KEYUP && e->key.repeat == 0) {
 		switch (e->key.keysym.sym) {
-		case SDLK_d:mVelX -= 5; break;
-		case SDLK_a:mVelX += 5; break;
+		case SDLK_d:mVelX -= 5; PLAYER_ANIMATION_TYPE = 0; break;
+		case SDLK_a:mVelX += 5; PLAYER_ANIMATION_TYPE = 0; break;
 		}
 	}
 }
