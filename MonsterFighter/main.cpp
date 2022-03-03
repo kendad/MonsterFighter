@@ -20,6 +20,8 @@ void main() {
 	Raycast raycast;
 	Swing swing;
 	PlayerAnimation playerAnimation;
+	Texture backgroundTexture;
+	backgroundTexture.loadFromFile("Assets/bg-1.png");
 
 	//game Loop
 	while (isRunning) {
@@ -34,6 +36,7 @@ void main() {
 		SDL_RenderClear(gRenderer);
 
 		//draw stuff here
+		//backgroundTexture.render(0, 0);
 		//Obstacles
 		map.renderObstacles();
 		worldObstacles = map.getObstacles();
@@ -45,8 +48,8 @@ void main() {
 		player.move(map.getObstacles());
 
 		swing.update();
-		//player.render();
-		if (PLAYER_ANIMATION_TYPE == 2) {
+		player.render();
+		/*if (PLAYER_ANIMATION_TYPE == 2) {
 			playerAnimation.playClimbAnimation(&player, true);
 		}
 		else
@@ -68,7 +71,7 @@ void main() {
 		else {
 				if (PLAYER_ANIMATION_TYPE == 1) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playWalkAnimation(&player); } else { playerAnimation.playWalkAnimation(&player, true); } }
 				if (PLAYER_ANIMATION_TYPE == 0) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playIdleAnimation(&player); } else { playerAnimation.playIdleAnimation(&player, true); } }
-			}
+			}*/
 
 		//Update the Renderer with the new stuff
 		SDL_RenderPresent(gRenderer);
