@@ -43,7 +43,8 @@ void Texture::loadFromFile(std::string path) {
 }
 
 void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
-	SDL_Rect renderQuad = { x,y, width,height };
+	SDL_Rect renderQuad = { x,y, SCREEN_WIDTH,SCREEN_HEIGHT };
+	//SDL_Rect renderQuad = { x,y, width,height };
 	if (clip != NULL) {
 		renderQuad.w = 30;
 		renderQuad.h = 30;

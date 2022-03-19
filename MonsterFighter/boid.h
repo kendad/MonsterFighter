@@ -20,8 +20,9 @@ public:
 	void collision();
 
 	void render();
-private:
+
 	Vector location;
+private:
 	Vector velocity;
 	Vector acceleration;
 

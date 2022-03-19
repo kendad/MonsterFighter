@@ -51,7 +51,7 @@ void Boid::flock(std::vector<Boid>* boids, Vector target) {
 
 	sep.mult(0.3);
 	ali.mult(1.0);
-	coh.mult(1.5);
+	coh.mult(0.5);
 	seeker.mult(0.3);
 
 	applyForce(seeker);
@@ -173,12 +173,14 @@ void Boid::collision() {
 }
 
 void Boid::render() {
+	//render boids as triangles
 	int r = 5;
 	float heading = atan2(velocity.x, velocity.y);
 	float theta = heading + M_PI / 2;
 
-	float x_prime_1 = ((location.x - (location.x)) * cos(theta)) - ((location.y - (location.y + r)) * sin(theta)) + (location.x);
+	/*float x_prime_1 = ((location.x - (location.x)) * cos(theta)) - ((location.y - (location.y + r)) * sin(theta)) + (location.x);
 	float y_prime_1 = ((location.x - (location.x)) * sin(theta)) + ((location.y - (location.y + r)) * cos(theta)) + (location.y + r);
+	float y_prime_1_arrow = ((location.x - (location.x)) * sin(theta)) + (((location.y+20) - (location.y + r)) * cos(theta)) + (location.y + r);
 
 	float x_prime_2 = (((location.x + r) - (location.x)) * cos(theta)) - (((location.y + r) - (location.y + r)) * sin(theta)) + (location.x);
 	float y_prime_2 = (((location.x + r) - (location.x)) * sin(theta)) + (((location.y + r) - (location.y + r)) * cos(theta)) + (location.y + r);
@@ -186,16 +188,17 @@ void Boid::render() {
 	float x_prime_3 = (((location.x + r) - (location.x)) * cos(theta)) - (((location.y - r) - (location.y + r)) * sin(theta)) + (location.x);
 	float y_prime_3 = (((location.x + r) - (location.x)) * sin(theta)) + (((location.y - r) - (location.y + r)) * cos(theta)) + (location.y + r);
 
+	SDL_SetRenderDrawColor(gRenderer, 255, 255, 0, 255);
+
+	SDL_RenderDrawLine(gRenderer, x_prime_1, y_prime_1, x_prime_2, y_prime_2);
+	SDL_RenderDrawLine(gRenderer, x_prime_1, y_prime_1, x_prime_3, y_prime_3);
+	SDL_RenderDrawLine(gRenderer, x_prime_2, y_prime_2, x_prime_3, y_prime_3);*/
+
+	//render boids as animated texture
 	boidTexture.render(location.x, location.y, &animationFrame[currentAnimationFrame], theta * 57.296);
 	if (SDL_GetTicks() - animationTime >= 10) {
 		currentAnimationFrame++;
 		if (currentAnimationFrame > 9) currentAnimationFrame = 0;
 		animationTime = SDL_GetTicks();
 	}
-
-	/*SDL_SetRenderDrawColor(gRenderer, 255, 255, 0, 255);
-
-	SDL_RenderDrawLine(gRenderer, x_prime_1, y_prime_1, x_prime_2, y_prime_2);
-	SDL_RenderDrawLine(gRenderer, x_prime_1, y_prime_1, x_prime_3, y_prime_3);
-	SDL_RenderDrawLine(gRenderer, x_prime_2, y_prime_2, x_prime_3, y_prime_3);*/
 }

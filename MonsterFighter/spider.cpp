@@ -3,7 +3,7 @@
 #include "basicFunctionalities.h"
 
 Spider::Spider() {
-	body = { 50,SCREEN_HEIGHT / 4 ,50,50 };
+	body = { 100,SCREEN_HEIGHT / 2 ,50,50 };
 
 	//FRONT LEGS
 	legF_1_startingPoint = { body.x + body.w,body.y };

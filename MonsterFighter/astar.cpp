@@ -153,10 +153,10 @@ void Astar::render() {
 		SDL_RenderFillRect(gRenderer, &tmpRect);
 	}
 	SDL_SetRenderDrawColor(gRenderer, 255, 255, 0, 255);
-	for (int i = 0; i < openList.size(); i++) {
+	/*for (int i = 0; i < openList.size(); i++) {
 		SDL_Rect tmpRect = { openList[i].position.x * 10,openList[i].position.y * 10,10,10 };
 		SDL_RenderFillRect(gRenderer, &tmpRect);
-	}
+	}*/
 
 	SDL_SetRenderDrawColor(gRenderer, 0, 255, 0, 255);
 	SDL_Rect tmpRect = { closedList[closedList.size() - 1].position.x * 10,closedList[closedList.size() - 1].position.y * 10,10,10 };

@@ -36,10 +36,16 @@ void main() {
 	Astar astar = Astar(&startNode, &endNode);
 	astar.update();
 
+	//Inverse Kinematics
+	vec2D startPoint = { SCREEN_WIDTH / 2 - 100,SCREEN_HEIGHT / 2 };
+	vec2D controlPoint = { SCREEN_WIDTH / 2 - 100,SCREEN_HEIGHT / 2 };
+	InverseKinematics ik = InverseKinematics(10,40,&startPoint,&controlPoint);
+
 	//Boids Initilization
 	std::vector<Boid> boids;
 	for (int i = 0; i < 100; i++) {
 		Boid tmpBoid = Boid((SCREEN_WIDTH / 2) - 100, SCREEN_HEIGHT / 2);
+		//Boid tmpBoid = Boid(rand()%(0,SCREEN_WIDTH-1), rand() % (0, SCREEN_HEIGHT - 1));
 		boids.push_back(tmpBoid);
 	}
 	int x, y;
@@ -58,34 +64,53 @@ void main() {
 		SDL_RenderClear(gRenderer);
 
 		//draw stuff here
-		//backgroundTexture.render(0, 0);
+		backgroundTexture.render(0, 0);
 		//Obstacles
-		map.renderObstacles();
-		worldObstacles = map.getObstacles();
+		//map.renderObstacles();
+		//worldObstacles = map.getObstacles();
 		//drawGridWorld();
 		
 		//Astar Visulizer
-		//vec2D tmpVec = { player.getPlayerRect().x / 10,player.getPlayerRect().y / 10 };
-		//endNode = tmpVec;
-		//astar.update();
-		//if(astar.openList.size()>0 and astar.closedList.size()>0) astar.render();
+		/*vec2D tmpVec = { player.getPlayerRect().x / 10,player.getPlayerRect().y / 10 };
+		endNode = tmpVec;
+		tmpVec = { (int)boids[49].location.x / 10,(int)boids[49].location.y / 10 };
+		startNode = tmpVec;
+		if(astar.openList.size()>0 and astar.closedList.size()>0) astar.render();
+		astar.cleanWorld();
+		astar.update();*/
 		
 		//Spider
 		spider.update();
 		spider.render();
 
+		//Inverse Kinematics
+		/*SDL_GetMouseState(&x, &y);
+		controlPoint.x = x;
+		controlPoint.y = y;
+		ik.render();*/
+
 		//check for collision on the raycast and update the target position
-		raycast.raycastToMousePosition(player.getPlayerRect(), map.getObstacles());
+		//raycast.raycastToMousePosition(player.getPlayerRect(), map.getObstacles());
 		
 		//Swing and Player
-		if (swing.isSwinging) swing.createSwing(&player, &raycast);
+		/*if (swing.isSwinging) swing.createSwing(&player, &raycast);
 		if (swing.pointsVector.size() > 0) { swing.updatePlayerPositionSwing(&player); }
-		player.move(map.getObstacles());
+		player.move(map.getObstacles());*/
 
-		swing.update();
+		//swing.update();
+
+		//Render Boids
+		/*for (int i = 0; i < boids.size(); i++) {
+			target.x = player.getPlayerRect().x;
+			target.y = player.getPlayerRect().y;
+			boids[i].flock(&boids, target);
+			boids[i].collision();
+			boids[i].update();
+			boids[i].render();
+		}*/
 		
 		//player.render();
-		if (PLAYER_ANIMATION_TYPE == 2) {
+		/*if (PLAYER_ANIMATION_TYPE == 2) {
 			playerAnimation.playClimbAnimation(&player, true);
 		}
 		else
@@ -107,17 +132,7 @@ void main() {
 		else {
 				if (PLAYER_ANIMATION_TYPE == 1) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playWalkAnimation(&player); } else { playerAnimation.playWalkAnimation(&player, true); } }
 				if (PLAYER_ANIMATION_TYPE == 0) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playIdleAnimation(&player); } else { playerAnimation.playIdleAnimation(&player, true); } }
-			}
-
-		//Render Boids
-		for (int i = 0; i < boids.size(); i++) {
-			target.x = player.getPlayerRect().x;
-			target.y = player.getPlayerRect().y;
-			boids[i].flock(&boids, target);
-			boids[i].collision();
-			boids[i].update();
-			boids[i].render();
-		}
+			}*/
 
 		//Update the Renderer with the new stuff
 		SDL_RenderPresent(gRenderer);
