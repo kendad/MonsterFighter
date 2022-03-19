@@ -2,8 +2,14 @@
 #include <SDL.h>
 #include <vector>
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+//const int SCREEN_WIDTH = 640;
+//const int SCREEN_HEIGHT = 480;
+
+const int SCREEN_WIDTH = 1000;
+const int SCREEN_HEIGHT = 800;
+
+//TOP DOWN approach //MAP
+extern int worldMatrix[SCREEN_WIDTH / 10][SCREEN_HEIGHT / 10];
 
 const int X_LEVEL_LENGTH=4;
 

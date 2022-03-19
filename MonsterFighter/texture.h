@@ -6,7 +6,7 @@
 class Texture {
 public:
 	Texture();
-	~Texture();
+	//~Texture();
 
 	void loadFromFile(std::string path);
 	void free();

@@ -16,9 +16,9 @@ void Texture::free() {
 	}
 }
 
-Texture::~Texture() {
-	free();
-}
+//Texture::~Texture() {
+//	free();
+//}
 
 void Texture::loadFromFile(std::string path) {
 	free();

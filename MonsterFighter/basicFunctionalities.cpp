@@ -82,3 +82,42 @@ bool checkCollision(SDL_Rect a, SDL_Rect b) {
 	//If none of the sides from A are outside B
 	return true;
 }
+
+void drawGridWorld() {
+	//draw the grid lines
+	for (int i = 0; i <= SCREEN_HEIGHT; i += 10) {
+		SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+		SDL_RenderDrawLine(gRenderer, 0, i, SCREEN_WIDTH, i);
+	}
+	for (int i = 0; i <= SCREEN_WIDTH; i += 10) {
+		SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+		SDL_RenderDrawLine(gRenderer, i, 0, i, SCREEN_HEIGHT);
+	}
+
+	//render Obsctacles
+	//convert grid space to screen space
+	for (int x = 0; x < SCREEN_WIDTH / 10; x++) {
+		for (int y = 0; y < SCREEN_HEIGHT / 10; y++) {
+			if (worldMatrix[x][y] == 1) {
+				SDL_SetRenderDrawColor(gRenderer, 255, 0, 0, 255);
+				SDL_Rect tmpRect = { x * 10,y * 10,10,10 };
+				SDL_RenderFillRect(gRenderer, &tmpRect);
+			}
+		}
+	}
+}
+
+vec2D convertScreenToGridSpace(int x, int y) {
+	vec2D convertedSpace = { x / 10,y / 10 };
+	return convertedSpace;
+}
+
+vec2D convertGridSpaceToScreenSpace(int x, int y) {
+	vec2D convertedSpace = { x * 10,y * 10 };
+	return convertedSpace;
+}
+
+//LERP
+float lerp(float normal, float min, float max) {
+	return ((max - min) * normal) + min;
+}

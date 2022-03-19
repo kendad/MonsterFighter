@@ -10,3 +10,5 @@ std::vector<SDL_Rect> worldObstacles = std::vector<SDL_Rect>();
 
 int PLAYER_ANIMATION_TYPE = 0;
 bool PLAYER_ANIMATION_FLIP = false;
+
+int worldMatrix[SCREEN_WIDTH / 10][SCREEN_HEIGHT / 10];

@@ -4,6 +4,10 @@
 #include "raycast.h"
 #include "swing.h"
 #include "playerAnimation.h"
+#include "astar.h"
+#include "IK.h"
+#include "spider.h"
+#include "boid.h"
 #undef main
 
 void main() {
@@ -16,12 +20,30 @@ void main() {
 
 	//Class Objects declared here
 	Player player;
+	Spider spider;
 	Map map;
 	Raycast raycast;
 	Swing swing;
 	PlayerAnimation playerAnimation;
 	Texture backgroundTexture;
 	backgroundTexture.loadFromFile("Assets/bg-1.png");
+
+	//Astar Initilization
+	vec2D startPos = { 0,0 };
+	vec2D endPos = { 99,79 };
+	Node startNode = Node(startPos);
+	Node endNode = Node(endPos);
+	Astar astar = Astar(&startNode, &endNode);
+	astar.update();
+
+	//Boids Initilization
+	std::vector<Boid> boids;
+	for (int i = 0; i < 100; i++) {
+		Boid tmpBoid = Boid((SCREEN_WIDTH / 2) - 100, SCREEN_HEIGHT / 2);
+		boids.push_back(tmpBoid);
+	}
+	int x, y;
+	Vector target = Vector(0, 0);
 
 	//game Loop
 	while (isRunning) {
@@ -40,16 +62,30 @@ void main() {
 		//Obstacles
 		map.renderObstacles();
 		worldObstacles = map.getObstacles();
+		//drawGridWorld();
+		
+		//Astar Visulizer
+		//vec2D tmpVec = { player.getPlayerRect().x / 10,player.getPlayerRect().y / 10 };
+		//endNode = tmpVec;
+		//astar.update();
+		//if(astar.openList.size()>0 and astar.closedList.size()>0) astar.render();
+		
+		//Spider
+		spider.update();
+		spider.render();
+
 		//check for collision on the raycast and update the target position
 		raycast.raycastToMousePosition(player.getPlayerRect(), map.getObstacles());
+		
 		//Swing and Player
 		if (swing.isSwinging) swing.createSwing(&player, &raycast);
 		if (swing.pointsVector.size() > 0) { swing.updatePlayerPositionSwing(&player); }
 		player.move(map.getObstacles());
 
 		swing.update();
-		player.render();
-		/*if (PLAYER_ANIMATION_TYPE == 2) {
+		
+		//player.render();
+		if (PLAYER_ANIMATION_TYPE == 2) {
 			playerAnimation.playClimbAnimation(&player, true);
 		}
 		else
@@ -71,7 +107,17 @@ void main() {
 		else {
 				if (PLAYER_ANIMATION_TYPE == 1) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playWalkAnimation(&player); } else { playerAnimation.playWalkAnimation(&player, true); } }
 				if (PLAYER_ANIMATION_TYPE == 0) { if (!PLAYER_ANIMATION_FLIP) { playerAnimation.playIdleAnimation(&player); } else { playerAnimation.playIdleAnimation(&player, true); } }
-			}*/
+			}
+
+		//Render Boids
+		for (int i = 0; i < boids.size(); i++) {
+			target.x = player.getPlayerRect().x;
+			target.y = player.getPlayerRect().y;
+			boids[i].flock(&boids, target);
+			boids[i].collision();
+			boids[i].update();
+			boids[i].render();
+		}
 
 		//Update the Renderer with the new stuff
 		SDL_RenderPresent(gRenderer);
